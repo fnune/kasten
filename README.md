@@ -1,5 +1,7 @@
 # Kasten
 
+[![Project Status: Concept – Minimal or no implementation has been done yet, or the repository is only intended to be a limited example, demo, or proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
+
 A journaling tool with support for linking entries, which can be used to create a Zettelkasten.
 
 ## Features
