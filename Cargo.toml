@@ -9,4 +9,4 @@ repository = "git@github.com:fnune/kasten.git"
 documentation = "https://github.com/fnune/kasten"
 
 [dependencies]
-rusqlite = "0.23.1"
+rusqlite = "0.23"
