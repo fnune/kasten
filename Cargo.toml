@@ -9,5 +9,6 @@ repository = "git@github.com:fnune/kasten.git"
 documentation = "https://github.com/fnune/kasten"
 
 [dependencies]
+itertools = "0.9"
 rusqlite = "0.23"
 structopt = "0.3"

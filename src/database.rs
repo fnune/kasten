@@ -1,11 +1,12 @@
-use rusqlite::{params, Connection, NO_PARAMS};
+use crate::format;
+use rusqlite::{params, Connection, Result, NO_PARAMS};
 
 #[derive(Debug)]
-struct Entry {
-    id: i32,
-    title: String,
-    content: String,
-    date: String,
+pub struct Entry {
+    pub id: i32,
+    pub title: String,
+    pub content: String,
+    pub date: String,
 }
 
 pub fn initialize(conn: &Connection) {
@@ -41,20 +42,42 @@ pub fn view(conn: &Connection) {
     }
 }
 
-pub fn save(conn: &Connection, input: String) {
-    let mut lines = input.lines();
-    let title = lines.nth(0).expect("There's no title!");
-    let content_raw = lines.fold(String::new(), |accumulator, line| accumulator + line + "\n");
-    let content = content_raw.trim();
+pub fn view_one(conn: &Connection, id: i32) -> Result<String> {
+    conn.query_row(
+        "SELECT id, title, content, date FROM entries WHERE id = ?1",
+        params![id],
+        |row| {
+            Ok(format::serialize_entry(Entry {
+                id: row.get(0).expect("Could not get ID from row."),
+                title: row.get(1).expect("Could not get title from row."),
+                content: row.get(2).expect("Could not get content from row."),
+                date: row.get(3).expect("Could not get date from row."),
+            })
+            .expect("Failed to serialize entry."))
+        },
+    )
+}
 
-    println!("title: {}", title);
-    println!("content: {}", content);
+pub fn save(conn: &Connection, input: String) {
+    let parsed = format::parse_entry_input(input).expect("Could not parse input as EntryInput.");
 
     conn.execute(
         "insert into entries (title, content) values (?1, ?2)",
-        params![title, content],
+        params![parsed.title, parsed.content],
     )
     .expect("Error inserting your thing");
 
-    println!("Created a new entry");
+    println!("Created a new entry.");
+}
+
+pub fn update(conn: &Connection, input: String, id: i32) {
+    let parsed = format::parse_entry_input(input).expect("Could not parse input as EntryInput.");
+
+    conn.execute(
+        "UPDATE entries SET title = ?1, content = ?2 WHERE id = ?3",
+        params![parsed.title, parsed.content, id],
+    )
+    .expect("Error updating your thing");
+
+    println!("Updated your entry.");
 }

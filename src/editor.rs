@@ -1,6 +1,6 @@
 use std::{
     env::{temp_dir, var},
-    fs::{remove_file, File, write},
+    fs::{remove_file, write, File},
     io::Read,
     process::Command,
 };
@@ -12,9 +12,9 @@ pub fn create(content: Option<String>) -> String {
     file_path.push("editable");
 
     if let Some(data) = content {
-      write(&file_path, data.as_bytes()).expect("Could not write to file")
+        write(&file_path, data.as_bytes()).expect("Could not write to file")
     } else {
-      File::create(&file_path).expect("Could not create file");
+        File::create(&file_path).expect("Could not create file");
     }
 
     Command::new(editor)
