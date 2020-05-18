@@ -25,7 +25,7 @@ fn main() -> Result<()> {
     if opt.view {
         database::view(&conn);
     } else {
-        let input = editor::create();
+        let input = editor::create(None);
         database::save(&conn, input);
     }
 

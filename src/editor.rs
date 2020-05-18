@@ -1,16 +1,21 @@
 use std::{
     env::{temp_dir, var},
-    fs::{remove_file, File},
+    fs::{remove_file, File, write},
     io::Read,
     process::Command,
 };
 
-pub fn create() -> String {
+pub fn create(content: Option<String>) -> String {
     let editor = var("EDITOR").expect("No $EDITOR set!");
 
     let mut file_path = temp_dir();
     file_path.push("editable");
-    File::create(&file_path).expect("Could not create file");
+
+    if let Some(data) = content {
+      write(&file_path, data.as_bytes()).expect("Could not write to file")
+    } else {
+      File::create(&file_path).expect("Could not create file");
+    }
 
     Command::new(editor)
         .arg(&file_path)
