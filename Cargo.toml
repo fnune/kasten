@@ -10,3 +10,4 @@ documentation = "https://github.com/fnune/kasten"
 
 [dependencies]
 rusqlite = "0.23"
+structopt = "0.3"
