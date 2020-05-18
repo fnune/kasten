@@ -10,7 +10,7 @@ mod editor;
     about = "A journaling tool with support for linking entries, which can be used to create a Zettelkasten."
 )]
 struct Opt {
-    /// Prints the database as JSON.
+    /// Prints the database.
     #[structopt(short, long)]
     view: bool,
 }
