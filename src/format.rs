@@ -1,5 +1,5 @@
-use itertools::Itertools;
 use crate::database::Entry;
+use itertools::Itertools;
 
 pub struct EntryInput {
     pub title: String,
