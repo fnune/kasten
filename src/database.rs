@@ -1,5 +1,5 @@
 use crate::format;
-use rusqlite::{params, Connection, Result, NO_PARAMS};
+use rusqlite::{params, Connection, Result};
 
 #[derive(Debug)]
 pub struct Entry {
@@ -10,14 +10,21 @@ pub struct Entry {
 }
 
 pub fn initialize(conn: &Connection) {
-    conn.execute(
-        "create table if not exists entries (
+    conn.execute_batch(
+        "create table if not exists 'entries' (
              id integer primary key,
              title text not null,
              content text not null,
              date DATETIME DEFAULT CURRENT_TIMESTAMP
-         )",
-        NO_PARAMS,
+         );
+         create table if not exists 'references' (
+             id integer primary key,
+             source_note_id integer not null,
+             target_note_id integer not null,
+             date DATETIME DEFAULT CURRENT_TIMESTAMP,
+             FOREIGN KEY(source_note_id) REFERENCES entries(id),
+             FOREIGN KEY(target_note_id) REFERENCES entries(id)
+         );"
     )
     .expect("Error creating the database");
 }
