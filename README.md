@@ -23,6 +23,7 @@ A journaling tool with support for linking entries, which can be used to create 
   - [ ] Tag autocompletion:
     - Triggers when the user types a `#` character.
     - Autocompletes by filtering from a list of tags.
+- [x] Query for notes by `id`.
 - [ ] Query for notes filtering by their `created_at`, `updated_at`, `title` or `content` values.
 - [ ] Query for notes by reference. To do this, instead of parsing all the notes for each query, we keep a `references` table in the database:
   - `id`: integer
