@@ -35,6 +35,7 @@ A journaling tool with support for linking entries, which can be used to create 
   - `source_note_id`: integer
   - `created_at`: a date-time
 - [ ] Edit or delete notes:
+  - [x] Basic note editing using `--edit`.
   - This will remove all references whose `source_note_id` is this note's `id` from the database and create new ones from the edited text after saving.
   - Similarly, it will remove all tags whose `source_note_id` is this note's `id` and create new ones afterward.
   - It will also update the `updated_at` field on the note.
